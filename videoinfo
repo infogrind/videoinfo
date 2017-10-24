@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "Syntax: videoinfo <file>"
+    exit 1
+elif [ ! -r "$1" ]; then
+    echo "Can't read file: $1"
+    exit 1
+fi
+
+ffprobe -show_streams "$1" 2>&1 | grep 'Video: ' | sed 's/^ *//' | sed 's/,.*//'
